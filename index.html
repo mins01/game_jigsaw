@@ -64,53 +64,111 @@
 		.piece-wrap.element-move-target-moving{
 			filter: drop-shadow(0px 0px 5px #000000ff);
 		}
-		
+		.jigsaw-wrap{
+			aspect-ratio: 1/1;
+			width:100%;
+			height: auto;
+			max-width:50vmin;
+		}
 		.jigsaw-wrap .piece-shape{
 			background-image: var(--background-image,none);
 		}
 		.element-move-isolation{
 			padding: 100px;
-			width: min-content;
 			margin: 0 auto;
 			background: #eee;
 		}
     </style>
     <script type="module">
-		import Board from "./game/Board.js";
-        globalThis.board = new Board(document.querySelector('.game-wrap'))
+		import Game from "./game/Game.js";
+        globalThis.game = new Game(document.querySelector('.game-wrap'))
     </script>
 	<script>
 		let em = null;
 		window.addEventListener('load',(event)=>{
-			em = new ElementMove(document.querySelector('.game-wrap'))
-			board.width=400;
-			board.height=400;
-			board.divX = 5;
-			board.divY = 4;
-			board.initEvent();
-			board.draw();
+
+			window.addEventListener('resize',game.resize)
+
+			game.em = new ElementMove(document.querySelector('.game-wrap'))
+			game.board.width=400;
+			game.board.height=400;
+			game.board.divX = 2;
+			game.board.divY = 1;
+			
+
+
+			game.board.ready();
+			game.resize();
+			game.board.unfixed();
+			game.board.shuffle();
+
+			game.board.draw();
+			
+
 		})
+		function startGame(f){
+			let pieceNumbers = f.pieceNumber.value.split(',');
+			game.board.divX = pieceNumbers[0];
+			game.board.divY = pieceNumbers[1];
+			
+			game.board.ready();
+			game.board.unfixed();
+			game.board.shuffle();
+
+			game.board.draw();
+		}
 	</script>
 </head>
 <body>
 	<div class="container">
         <h1>game jigsaw</h1>
         <hr>
-		<div class="element-move-isolation ">
-			<div class="element-move-area game-wrap jigsaw-wrap piece-container mask-css" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
-				<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
-				<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-				<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+		<div class="card">
+			<div class="card-header">직소 퍼즐</div>
+			<div class="card-body">
+				<form class="form-inline" action="" onsubmit="startGame(this);return false;">
+					<div class="input-group m-1">
+						<div class="input-group-prepend">
+						  <span class="input-group-text">조각수</span>
+						</div>
+						<select name="pieceNumber" class="form-control">
+							<option value="2,1">2 조각</option>
+							<option value="2,2">4 조각</option>
+							<option value="3,3">9 조각</option>
+							<option value="4,4">16 조각</option>
+							<option value="5,5">25 조각</option>
+							<option value="6,6">36 조각</option>
+							<option value="7,7">49 조각</option>
+							<option value="8,8">64 조각</option>
+							<option value="9,9">81 조각</option>
+							<option value="10,10">100 조각</option>
+						</select>
+						<div class="input-group-append" id="button-addon4">
+							<button class="btn btn-success" type="submit">시작</button>
+						</div>
+					</div>
+					<button class="btn btn-success m-1" type="button" onclick="game.solve()" >자동해결</button>
 
-				<div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-				<div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-				<div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-
-				<div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-				<div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-				<div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+				</form>
+				<hr>
+				<div class="element-move-isolation ">
+					<div class="element-move-area game-wrap jigsaw-wrap piece-container mask-css" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
+						<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
+						<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+						<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+		
+						<div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+						<div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+						<div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+		
+						<div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+						<div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+						<div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+					</div>
+				</div>
 			</div>
 		</div>
+		
 
 	</div>
 </body>

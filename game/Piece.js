@@ -42,6 +42,23 @@ class Piece{
     get zIndex(){ return parseInt(this.wrap.style.zIndex??0); }
     set zIndex(v){ this.wrap.style.zIndex = v;}
 
+    isCorrect(){
+        let piece = this;
+        let target = this.wrap;
+        let rect = target.getBoundingClientRect();
+        let pos = ElementMove.pos(target);
+
+        if(Math.abs(pos.x/rect.width) < 0.3 && Math.abs(pos.y/rect.height) < 0.3){
+            return true
+        }
+        return false;
+    }
+    correct(){
+        let target = this.wrap;
+        ElementMove.moveTo(target,0,0);
+        this.fixed = true;
+    }
+
     static randPN(){
         return Math.floor(Math.random()*2)===0?'n':'p'
     }

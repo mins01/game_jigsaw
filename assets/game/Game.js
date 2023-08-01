@@ -14,7 +14,7 @@ class Game{
         this.board.initEvent();
     }
 
-    get ended(){ return this.gameWrap.classList.contain('ended');}
+    get ended(){ return this.gameWrap.classList.contains('ended');}
     set ended(v){ v?this.gameWrap.classList.add('ended'):this.gameWrap.classList.remove('ended');}
 
     setBoard(divX,divY){
@@ -37,7 +37,10 @@ class Game{
     }
 
     checkGame = ()=>{
-        if(this.board.remain==0){
+        if(this.ended){
+            console.log('이미 게임이 종료되었습니다.');
+        }else if(this.board.remain==0){
+            console.log('game.end() 호출');
             this.end();
         }else{
             console.log('게임 종료 체크 in Game','남음',this.board.remain);
@@ -50,8 +53,9 @@ class Game{
         })
         let gapTime = 3000/this.board.sortPieces.length;
         gapTime = Math.min(100,gapTime);
-        console.log(gapTime);
+        console.log('처리딜레이단위시간',gapTime);
         this.board.sortPieces.forEach((piece,idx) => {
+            if(piece.fixed){return}
             setTimeout(()=>{
                 ElementMove.moveTo(piece.wrap,0,0);
                 piece.correct();

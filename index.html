@@ -49,7 +49,7 @@
 	<link rel="stylesheet" href="assets/style.css">
 	<style>
 		.game-wrap{
-			--background-image:url(./assets/bg/bg-1.jpg) !important;
+			--background-image:url(./assets/bg/bg-1.jpg);
 		}
 		.jigsaw-wrap .piece-shape{
 			background-image: var(--background-image,none);
@@ -83,19 +83,25 @@
 			const url = new URL(location);
 			const pieceNumber = url.searchParams.get('pieceNumber');
 			if(pieceNumber) f.pieceNumber.value = pieceNumber;
+			const imgUrl = url.searchParams.get('imgUrl');
+			if(imgUrl) f.imgUrl.value = imgUrl;
 		}
 		function startGame(f){
 			if(!f) f = document.form_conf;
+			if(f.imgUrl.value.length >4)
+			game.gameWrap.style.setProperty('--background-image',`url(${f.imgUrl.value})`);
+
 			let pieceNumbers = f.pieceNumber.value.split(',');
 			game.setBoard(pieceNumbers[0],pieceNumbers[1]);
 			game.start();
-			gameUrl(f)
+			changeUrl(f)
 		}
-		function gameUrl(f){
+		function changeUrl(f){
 			if(!f) f = document.form_conf;
 			const state = { page_id: 1, user_id: 5 };
 			const url = new URL(location);
 			url.searchParams.set("pieceNumber", f.pieceNumber.value);
+			url.searchParams.set("imgUrl", f.imgUrl.value);
 
 			history.pushState(state, "", url);
 		}
@@ -107,6 +113,12 @@
 			<div class="col-lg-6"><h1 class="m-0">직소 퍼즐</h1></div>
 			<div class="col-lg-6">
 				<form name="form_conf" class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
+					<div class="input-group m-1 input-group-sm">
+						<div class="input-group-prepend">
+						  <span class="input-group-text">이미지</span>
+						</div>
+						<input name="imgUrl" type="url" class="form-control" placeholder="이미지 URL" >
+					</div>
 					<div class="input-group m-1 input-group-sm">
 						<div class="input-group-prepend">
 						  <span class="input-group-text">조각수</span>
@@ -124,10 +136,9 @@
 							<option value="10,10">100 조각</option>
 							<option value="20,10">200 조각</option>
 						</select>
-						<div class="input-group-append" id="button-addon4">
-							<button class="btn btn-success" type="submit">시작</button>
-						</div>
 					</div>
+					<button class="btn btn-sm btn-success" type="submit">준비</button>
+
 					<button class="btn btn-sm btn-warning m-1" type="button" onclick="game.solve()" >자동해결</button>
 				</form>
 			</div>

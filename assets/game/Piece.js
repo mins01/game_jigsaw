@@ -36,7 +36,7 @@ class Piece{
     get shapeLeft(){ return this.shape.dataset.shapeLeft; }
     set shapeLeft(v){ this.shape.dataset.shapeLeft = v; }
 
-    get fixed(){ return this.wrap.classList.contain('fixed');}
+    get fixed(){ return this.wrap.classList.contains('fixed');}
     set fixed(v){ v?this.wrap.classList.add('fixed'):this.wrap.classList.remove('fixed');}
 
     get zIndex(){ return parseInt(this.wrap.style.zIndex??0); }

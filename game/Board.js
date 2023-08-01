@@ -37,7 +37,9 @@ class Board{
                 piece.shapeLeft = Piece.randPN();
                 // 테투리 피스 0
                 if(piece.posX ===0 ){ piece.shapeLeft = '0';}
+                else{ piece.shapeLeft = this.pieces[piece.posX -1 + piece.posY * mX].shapeRight=='n'?'p':'n' } //왼쪽 피스 도출에 싱크
                 if(piece.posY ===0 ){ piece.shapeTop = '0';}
+                else{ piece.shapeTop = this.pieces[piece.posX + (piece.posY -1) * mX].shapeBottom=='n'?'p':'n' } //위 피스의 도출에 싱크
                 if(piece.posX ===mX-1 ){ piece.shapeRight = '0';}
                 if(piece.posY ===mY-1 ){ piece.shapeBottom = '0';}
                 this.board.appendChild(piece.piece)

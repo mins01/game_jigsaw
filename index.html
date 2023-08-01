@@ -66,28 +66,38 @@
 	<script>
 		let em = null;
 		window.addEventListener('load',(event)=>{
+			initConfForQstr();
 
 			window.addEventListener('resize',game.resize)
 
 			game.em = new ElementMove(game.board.boardWrap)
-			// game.board.width=400;
+			// game.board.width=400; //자동 세팅 됨
 			// game.board.height=400;
-			game.board.divX = 2;
-			game.board.divY = 1;
-
-			game.board.ready();
-			
-			game.board.unfixed();
-			game.board.shuffle();
-
+			// game.board.divX = 2;
+			// game.board.divY = 1;
 			game.resize();
-			game.board.draw();
-
+			startGame();
 		})
+		function initConfForQstr(f){
+			if(!f) f = document.form_conf;
+			const url = new URL(location);
+			const pieceNumber = url.searchParams.get('pieceNumber');
+			if(pieceNumber) f.pieceNumber.value = pieceNumber;
+		}
 		function startGame(f){
+			if(!f) f = document.form_conf;
 			let pieceNumbers = f.pieceNumber.value.split(',');
 			game.setBoard(pieceNumbers[0],pieceNumbers[1]);
 			game.start();
+			gameUrl(f)
+		}
+		function gameUrl(f){
+			if(!f) f = document.form_conf;
+			const state = { page_id: 1, user_id: 5 };
+			const url = new URL(location);
+			url.searchParams.set("pieceNumber", f.pieceNumber.value);
+
+			history.pushState(state, "", url);
 		}
 	</script>
 </head>
@@ -96,8 +106,8 @@
 		<div class="row">
 			<div class="col-lg-6"><h1 class="m-0">직소 퍼즐</h1></div>
 			<div class="col-lg-6">
-				<form class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
-					<div class="input-group m-1">
+				<form name="form_conf" class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
+					<div class="input-group m-1 input-group-sm">
 						<div class="input-group-prepend">
 						  <span class="input-group-text">조각수</span>
 						</div>
@@ -118,7 +128,7 @@
 							<button class="btn btn-success" type="submit">시작</button>
 						</div>
 					</div>
-					<button class="btn btn-warning m-1" type="button" onclick="game.solve()" >자동해결</button>
+					<button class="btn btn-sm btn-warning m-1" type="button" onclick="game.solve()" >자동해결</button>
 				</form>
 			</div>
 		</div>
@@ -126,7 +136,7 @@
 	<div class="container-fulid">
 		<div class="game-outbox game-wrap">
 			<div class="element-move-isolation ">
-				<div class="element-move-area board-wrap  jigsaw-wrap piece-container mask-css" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
+				<div class="element-move-area board-wrap  jigsaw-wrap piece-container mask-svg" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
 					<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
 					<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
 					<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>

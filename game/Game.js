@@ -24,19 +24,18 @@ class Game{
 
     }
     end(){
-        alert('게임 종료');
+        setTimeout(()=>{
+            alert('직소 퍼즐 맞추기 완료!');
+            console.log('게임 종료','남음',this.board.remain);
+        },100)
     }
 
     checkGame = ()=>{
         if(this.board.remain==0){
-            setTimeout(()=>{
-                alert('직소 퍼즐 맞추기 완료!');
-            },100)
-            
+            this.end();
         }else{
             console.log('게임 종료 체크 in Game','남음',this.board.remain);
         }
-        
     }
 
     solve(){

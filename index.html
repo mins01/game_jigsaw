@@ -37,10 +37,53 @@
 	
 	<!-- //meta og -->
 	
-	
+
+    <link rel="stylesheet" href="assets/ui_jigsaw/piece.css">
+    <link rel="stylesheet" href="assets/ui_jigsaw/piece-shape-mask-svgs/piece-shape-mask-svgs.css">
+    <link rel="stylesheet" href="assets/ui_jigsaw/jigsaw.css">
+	<style>
+        .game-wrap{
+            --background-image:url(../../assets/bg/bg-1.jpg);
+        }
+		.piece-shape{
+			background-color: #caa;
+		}
+    </style>
+    <script type="module">
+		import Board from "./game/Board.js";
+        globalThis.board = new Board(document.querySelector('.game-wrap'))
+    </script>
+	<script>
+		
+		window.addEventListener('load',(event)=>{
+			board.width='400px'
+			board.height='400px'
+			board.divX = 4;
+			board.divY = 4;
+			board.draw();
+		})
+	</script>
 </head>
 <body>
 	<div class="container">
+        <h1>game jigsaw</h1>
+        <hr>
+        <div class=" game-wrap jigsaw-wrap piece-container mask-css" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: rgb(115, 255, 0);">
+            <div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
+            <div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            <div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            
+            <div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            <div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            <div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            
+            <div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            <div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            <div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+            
+            
+        </div>
+
 	</div>
 </body>
 </html>

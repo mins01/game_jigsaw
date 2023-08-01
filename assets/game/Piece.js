@@ -58,6 +58,9 @@ class Piece{
         ElementMove.moveTo(target,0,0);
         this.fixed = true;
     }
+    isolate(){
+        ElementMove.isolate('in',this.wrap)
+    }
 
     static randPN(){
         return Math.floor(Math.random()*2)===0?'n':'p'

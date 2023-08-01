@@ -96,21 +96,23 @@ class Board{
         this.boardWrap.innerHTML = null;
         this.usedPieces.forEach((piece)=>{
             this.boardWrap.appendChild(piece.wrap)
+            piece.isolate();
         })
-        this.isolate();
+        // this.isolate();
     }
     isolate(){
         this.usedPieces.forEach((piece)=>{
-            ElementMove.isolate('in',piece.wrap)
+            piece.isolate();
         })
     }
     shuffle(){
         this.usedPieces.forEach((piece,idx)=>{
             ElementMove.moveTo(piece.wrap,
-                (Math.random()-0.5) * 4 * this.width  ,
-                (Math.random()-0.5) * 4 * this.height
+                (Math.random()-0.5) * 2 * this.width  ,
+                (Math.random()-0.5) * 2 * this.height
                 )
             // ElementMove.isolate('in',piece.wrap)
+            piece.isolate();
         })
     }
     unfixed(){

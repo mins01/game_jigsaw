@@ -45,54 +45,22 @@
 	<link rel="stylesheet" href="assets/js_elementMove/elementMove.css">
 	<script src="assets/js_elementMove/ElementMove.js"></script>
 
+
+	<link rel="stylesheet" href="assets/style.css">
 	<style>
-        .game-wrap{
-            --background-image:url(./assets/bg/bg-1.jpg);
-        }
-		.piece-shape{
-			background-color: #caa;
-			pointer-events: none;
-		}
-		.piece-wrap{
-			filter: drop-shadow(0px 0px 2px #00000099);
-		}
-		.piece-wrap.fixed{
-			z-index: 5 !important;
-			pointer-events: none !important;
-			filter: drop-shadow(0px 0px 2px #99ff00ff);
-		}
-		.piece-wrap.element-move-target-moving{
-			filter: drop-shadow(0px 0px 5px #000000ff);
-		}
-		.jigsaw-wrap{
-			aspect-ratio: 1/1;
-			width:100%;
-			height: auto;
-			max-width:50vmin;
-			min-width: 300px;
-			margin:50px;
+		.game-wrap{
+			--background-image:url(./assets/bg/bg-1.jpg) !important;
 		}
 		.jigsaw-wrap .piece-shape{
 			background-image: var(--background-image,none);
 		}
-		.element-move-isolation{
-			/* padding: 100px; */
-			padding:20px;
-			margin: 0 auto;
-			background: #eee;
-			display: flex;
-			flex-direction: row;
-			flex-wrap: nowrap;
-			align-content: center;
-			justify-content: center;
-			align-items: center;
-			min-width: 300px;
-			/* max-width: 80vmin; */
-			/* max-height: 80vmin; */
-		}
+
+
+
+
     </style>
     <script type="module">
-		import Game from "./game/Game.js";
+		import Game from "./assets/game/Game.js";
         globalThis.game = new Game(document.querySelector('.game-wrap'))
     </script>
 	<script>
@@ -101,44 +69,34 @@
 
 			window.addEventListener('resize',game.resize)
 
-			game.em = new ElementMove(document.querySelector('.game-wrap'))
-			game.board.width=400;
-			game.board.height=400;
+			game.em = new ElementMove(game.board.boardWrap)
+			// game.board.width=400;
+			// game.board.height=400;
 			game.board.divX = 2;
 			game.board.divY = 1;
-			
-
 
 			game.board.ready();
-			game.resize();
+			
 			game.board.unfixed();
 			game.board.shuffle();
 
+			game.resize();
 			game.board.draw();
-			
 
 		})
 		function startGame(f){
 			let pieceNumbers = f.pieceNumber.value.split(',');
-			game.board.divX = pieceNumbers[0];
-			game.board.divY = pieceNumbers[1];
-			
-			game.board.ready();
-			game.board.unfixed();
-			game.board.shuffle();
-
-			game.board.draw();
+			game.setBoard(pieceNumbers[0],pieceNumbers[1]);
+			game.start();
 		}
 	</script>
 </head>
 <body>
 	<div class="container">
-        <h1>game jigsaw</h1>
-        <hr>
-		<div class="card">
-			<div class="card-header">직소 퍼즐</div>
-			<div class="card-body">
-				<form class="form-inline" action="" onsubmit="startGame(this);return false;">
+		<div class="row">
+			<div class="col-lg-6"><h1 class="m-0">직소 퍼즐</h1></div>
+			<div class="col-lg-6">
+				<form class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
 					<div class="input-group m-1">
 						<div class="input-group-prepend">
 						  <span class="input-group-text">조각수</span>
@@ -154,29 +112,32 @@
 							<option value="8,8">64 조각</option>
 							<option value="9,9">81 조각</option>
 							<option value="10,10">100 조각</option>
+							<option value="20,10">200 조각</option>
 						</select>
 						<div class="input-group-append" id="button-addon4">
 							<button class="btn btn-success" type="submit">시작</button>
 						</div>
 					</div>
-					<button class="btn btn-success m-1" type="button" onclick="game.solve()" >자동해결</button>
-
+					<button class="btn btn-warning m-1" type="button" onclick="game.solve()" >자동해결</button>
 				</form>
-				<hr>
-				<div class="element-move-isolation ">
-					<div class="element-move-area game-wrap jigsaw-wrap piece-container mask-css" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
-						<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
-						<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-		
-						<div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-		
-						<div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-					</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fulid">
+		<div class="game-outbox game-wrap">
+			<div class="element-move-isolation ">
+				<div class="element-move-area board-wrap  jigsaw-wrap piece-container mask-css" style="gap:2px;--div-x:3; --div-y:3; --jigsaw-width:300px;--jigsaw-height:300px; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
+					<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
+					<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+					<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+	
+					<div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+					<div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+					<div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+	
+					<div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+					<div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+					<div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
 				</div>
 			</div>
 		</div>

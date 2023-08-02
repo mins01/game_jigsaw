@@ -26,7 +26,7 @@
 
 }
 .game-wrap.ended .piece-wrap{
-    filter: drop-shadow(0px 0px 2px #33ff33ff);
+    filter: drop-shadow(0px 0px 1px #33ff33ff);
 
 }
 
@@ -36,15 +36,15 @@
     pointer-events: none;
 }
 .piece-wrap{
-    filter: drop-shadow(0px 0px 2px #00000099);
+    filter: drop-shadow(3px 3px 5px #00000099);
 }
 .piece-wrap.fixed{
     z-index: 5 !important;
     pointer-events: none !important;
-    filter: drop-shadow(0px 0px 2px #0033ffff);
+    filter: drop-shadow(0px 0px 1px #0033ffff);
 }
 .piece-wrap.element-move-target-moving{
-    filter: drop-shadow(0px 0px 5px #ffaa00ff);
+    filter: drop-shadow(3px 3px 5px #ffaa0099);
 }
 
 /* 이미지 미리보기 */

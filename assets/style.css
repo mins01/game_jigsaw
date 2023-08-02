@@ -74,6 +74,8 @@
     background-image: none;
     background-size: cover;
     outline: 2px solid #ffffff;
+
+    background-size: var(--jigsaw-width) var(--jigsaw-height);
 }
 .preview-wrap{
     aspect-ratio: 1/1;

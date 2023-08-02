@@ -61,9 +61,17 @@
 			background-image: var(--background-image,none);
 		}
 
-		.element-move-target{
+		
+		.element-move-body.moving .element-move-target{
+			will-change: auto;
+		}
+		.element-move-target:hover,
+		.element-move-target.element-move-target-moving{
 			will-change: transform;
 		}
+		/* .element-move-target{
+			will-change: transform;
+		} */
 
 
 

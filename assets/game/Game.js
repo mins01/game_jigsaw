@@ -14,6 +14,11 @@ class Game{
         this.board.initEvent();
     }
 
+    get width(){ return parseInt(this.gameWrap.style.getPropertyValue('--jigsaw-width')); }
+    set width(v){ this.gameWrap.style.setProperty('--jigsaw-width',v+'px'); }
+    get height(){ return parseInt(this.gameWrap.style.getPropertyValue('--jigsaw-height')); }
+    set height(v){ this.gameWrap.style.setProperty('--jigsaw-height',v+'px'); }
+
     get ended(){ return this.gameWrap.classList.contains('ended');}
     set ended(v){ v?this.gameWrap.classList.add('ended'):this.gameWrap.classList.remove('ended');}
 
@@ -65,8 +70,19 @@ class Game{
         });
     }
 
+    preview(){
+        this.gameWrap.classList.toggle('preview');
+    }
     resize = (event)=>{
-        this.board.autoResize();
+        // this.board.autoResize();
+        this.autoResize();
+    }
+
+    autoResize = (event)=>{
+        let rectBoardWrap = this.board.boardWrap.getBoundingClientRect();
+        this.width = parseInt(rectBoardWrap.width);
+        this.height = parseInt(rectBoardWrap.height);
+        this.board.isolate();
     }
 }
 

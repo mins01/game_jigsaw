@@ -16,10 +16,10 @@ class Board{
     get divY(){ return parseInt(this.boardWrap.style.getPropertyValue('--div-y')); }
     set divY(v){ this.boardWrap.style.setProperty('--div-y',v); }
 
-    get width(){ return parseInt(this.boardWrap.style.getPropertyValue('--jigsaw-width')); }
-    set width(v){ this.boardWrap.style.setProperty('--jigsaw-width',v+'px'); }
-    get height(){ return parseInt(this.boardWrap.style.getPropertyValue('--jigsaw-height')); }
-    set height(v){ this.boardWrap.style.setProperty('--jigsaw-height',v+'px'); }
+    // get width(){ return parseInt(this.boardWrap.style.getPropertyValue('--jigsaw-width')); }
+    // set width(v){ this.boardWrap.style.setProperty('--jigsaw-width',v+'px'); }
+    // get height(){ return parseInt(this.boardWrap.style.getPropertyValue('--jigsaw-height')); }
+    // set height(v){ this.boardWrap.style.setProperty('--jigsaw-height',v+'px'); }
 
     get remain(){ return this.boardWrap.querySelectorAll('.piece-wrap:not(.fixed)').length}
 
@@ -106,10 +106,12 @@ class Board{
         })
     }
     shuffle(){
+        let rectBoardWrap = this.boardWrap.getBoundingClientRect();
+
         this.usedPieces.forEach((piece,idx)=>{
             ElementMove.moveTo(piece.wrap,
-                (Math.random()-0.5) * 2 * this.width  ,
-                (Math.random()-0.5) * 2 * this.height
+                (Math.random()-0.5) * 2 * rectBoardWrap.width  ,
+                (Math.random()-0.5) * 2 * rectBoardWrap.height
                 )
             // ElementMove.isolate('in',piece.wrap)
             piece.isolate();
@@ -122,12 +124,12 @@ class Board{
     }
 
 
-    autoResize = (event)=>{
-        let rectBoardWrap = this.boardWrap.getBoundingClientRect();
-        this.width = parseInt(rectBoardWrap.width);
-        this.height = parseInt(rectBoardWrap.height);
-        this.isolate();
-    }
+    // autoResize = (event)=>{
+    //     let rectBoardWrap = this.boardWrap.getBoundingClientRect();
+    //     this.width = parseInt(rectBoardWrap.width);
+    //     this.height = parseInt(rectBoardWrap.height);
+    //     this.isolate();
+    // }
 }
 
 export default Board;

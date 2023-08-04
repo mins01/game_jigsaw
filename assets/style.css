@@ -1,5 +1,43 @@
 @charset "utf-8";
 
+.game-layout{
+    position: fixed;
+    left:0;right:0;top:0;bottom:0;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    padding: 10px;
+}
+.game-layout-header{
+    flex: 0 0 auto;
+}
+.game-layout-body{
+    flex: 1 0 50%;
+}
+
+
+@media (min-width: 900px) and (orientation: landscape) {
+    .game-layout{
+        flex-direction: row;
+
+    }
+    .game-layout-header{
+        flex: 0 0 200px;
+    }
+    .game-layout-body{
+        flex: 1 0 50%;
+    }
+}
+
+
+
+
+
 .game-outbox{
     border-radius: 10px;
     background-color: #eee;
@@ -7,15 +45,16 @@
     box-shadow: inset 0 0 10px #00000099;
     overflow: hidden;
     
-    margin: 10px auto;
+    margin: 0px auto;
 
-    aspect-ratio: 1/1;
+    /* aspect-ratio: 1/1; */
     /* max-width:100vmin; */
     min-width:200px;
-    width:clamp(200px,90vmin,900px);
+    /* width:clamp(200px,90vmin,900px); */
     /* height:80vmin; */
-
     position: relative;
+    width:100%;
+    height: 100%;
 }
 .padding-wrap{
     width: 100%;
@@ -90,7 +129,8 @@
 }
 .jigsaw-wrap{
     aspect-ratio: 1/1;
-    width:70%;
+    /* width:70%; */
+    width:max(200px,70vmin);
     height: auto;
 }
 

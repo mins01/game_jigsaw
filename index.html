@@ -126,71 +126,82 @@
 	</script>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-auto"><h1 class="m-0" style="font-size: 40px;">직소 퍼즐</h1></div>
-			<div class="col">
-				<form name="form_conf" class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
-					<div class="input-group m-1 input-group-sm">
-						<div class="input-group-prepend">
-						  <span class="input-group-text">이미지</span>
-						</div>
-						<input name="imgUrl" type="url" class="form-control" placeholder="이미지 URL" >
+	<div class="game-layout">
+		<div class="game-layout-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-auto"><h1 class="m-0" style="font-size: 40px;">직소 퍼즐</h1></div>
+					<div class="col">
+						<form name="form_conf" class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
+							<div class="input-group m-1 input-group-sm">
+								<div class="input-group-prepend">
+								<span class="input-group-text">이미지</span>
+								</div>
+								<input name="imgUrl" type="url" class="form-control" placeholder="이미지 URL" >
+							</div>
+							<div class="input-group m-1 input-group-sm">
+								<div class="input-group-prepend">
+								<span class="input-group-text">조각수</span>
+								</div>
+								<select name="pieceNumber" class="form-control">
+									<option value="2,1">2 조각</option>
+									<option value="2,2">4 조각</option>
+									<option value="3,3">9 조각</option>
+									<option value="4,4">16 조각</option>
+									<option value="5,5">25 조각</option>
+									<option value="6,6">36 조각</option>
+									<option value="7,7">49 조각</option>
+									<option value="8,8">64 조각</option>
+									<option value="9,9">81 조각</option>
+									<option value="10,10">100 조각</option>
+									<option value="20,10">200 조각</option>
+								</select>
+							</div>
+							<button class="btn btn-sm btn-success" type="submit">준비</button>
+	
+							<button class="btn btn-sm btn-info m-1" type="button" onclick="game.preview()" >이미지확인</button>
+							<button class="btn btn-sm btn-danger m-1" type="button" onclick="game.solve()" >자동해결</button>
+						</form>
 					</div>
-					<div class="input-group m-1 input-group-sm">
-						<div class="input-group-prepend">
-						  <span class="input-group-text">조각수</span>
+				</div>
+			</div>
+		</div>
+		<div class="game-layout-body">
+			<div class="game-outbox game-wrap">
+				<div class="preview-layer">
+					<div class="padding-wrap">
+						<div class="element-move-isolation ">
+							<div class="preview-wrap jigsaw-wrap"></div>
 						</div>
-						<select name="pieceNumber" class="form-control">
-							<option value="2,1">2 조각</option>
-							<option value="2,2">4 조각</option>
-							<option value="3,3">9 조각</option>
-							<option value="4,4">16 조각</option>
-							<option value="5,5">25 조각</option>
-							<option value="6,6">36 조각</option>
-							<option value="7,7">49 조각</option>
-							<option value="8,8">64 조각</option>
-							<option value="9,9">81 조각</option>
-							<option value="10,10">100 조각</option>
-							<option value="20,10">200 조각</option>
-						</select>
 					</div>
-					<button class="btn btn-sm btn-success" type="submit">준비</button>
-
-					<button class="btn btn-sm btn-info m-1" type="button" onclick="game.preview()" >이미지확인</button>
-					<button class="btn btn-sm btn-danger m-1" type="button" onclick="game.solve()" >자동해결</button>
-				</form>
+				</div>
+				<div class="padding-wrap">
+					<div class="element-move-isolation ">
+						<div class="element-move-area board-wrap  jigsaw-wrap piece-container mask-svg" style="gap:2px;--div-x:3; --div-y:3; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
+							<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
+							<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+							<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+			
+							<div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+							<div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+							<div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+			
+							<div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+							<div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+							<div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
+	<div class="container nav-container">
+		
+
+	</div>
 	<div class="container-fulid">
-		<div class="game-outbox game-wrap">
-			<div class="preview-layer">
-				<div class="padding-wrap">
-					<div class="element-move-isolation ">
-						<div class="preview-wrap jigsaw-wrap"></div>
-					</div>
-				</div>
-			</div>
-			<div class="padding-wrap">
-				<div class="element-move-isolation ">
-					<div class="element-move-area board-wrap  jigsaw-wrap piece-container mask-svg" style="gap:2px;--div-x:3; --div-y:3; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
-						<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
-						<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
 		
-						<div class="piece-wrap" data-pos-x="0" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="1" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="2" data-pos-y="1"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-		
-						<div class="piece-wrap" data-pos-x="0" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="1" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-						<div class="piece-wrap" data-pos-x="2" data-pos-y="2"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
 		
 
 	</div>

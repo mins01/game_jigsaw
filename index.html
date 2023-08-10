@@ -48,13 +48,11 @@
 
 	<link rel="stylesheet" href="assets/style.css">
 	<style>
-		.game-wrap{
+		.game-layout{
 			--img-aspect-ratio : 1 / 1;
 			--background-image:url(./assets/bg/bg-1.jpg);
 		}
-		.jigsaw-wrap{
-			aspect-ratio: var(--img-aspect-ratio);
-		}
+
 		.jigsaw-wrap .piece-shape{
 			background-image: var(--background-image,none);
 		}
@@ -113,11 +111,13 @@
 		}
 		function reayGame(f){
 			if(!f) f = document.form_conf;
+			let imgUrl = './assets/bg/bg-1.jpg';
 			if(f.imgUrl.value.length >4){
-				loadImageUrl(f.imgUrl.value,()=>{
-					startGame(f)
-				})
+				imgUrl = f.imgUrl.value;
 			}
+			loadImageUrl(imgUrl,()=>{
+				startGame(f)
+			})
 			
 		}
 		function startGame(f){
@@ -140,13 +140,14 @@
 			document.querySelector('.piece-container').dataset.shape = form_conf.pieceShape.value;
 		}
 		function loadImageUrl(url,cb){
-			console.log('loadImageUrl',url);
+			// console.log('loadImageUrl',url);
 			let img = new Image();
 			img.referrerPolicy = 'no-referrer';
 			img.onload = function(event){
-				console.log('onalod',event,img);
+				// console.log('onalod',event,img);
 				game.gameWrap.style.setProperty('--background-image',`url(${img.src})`);
-				document.querySelector('.game-wrap').style.setProperty('--img-aspect-ratio', img.naturalWidth+'/'+img.naturalHeight); // 비율 재정의
+				document.querySelector('.game-layout').style.setProperty('--img-aspect-ratio', img.naturalWidth+'/'+img.naturalHeight); // 비율 재정의
+				document.querySelector('.game-layout').dataset.imgOrientation = img.naturalWidth >=img.naturalHeight?'landscape':'portrait'
 				game.resize();
 				cb();
 			}
@@ -158,7 +159,7 @@
 <body>
 	<div class="game-layout">
 		<div class="game-layout-header">
-			<div class="container">
+			<div class="container game-navi-container">
 				<div class="row">
 					<div class="col-md-auto"><h1 class="m-0" style="font-size: 40px;">직소 퍼즐</h1></div>
 					<div class="col">
@@ -218,7 +219,7 @@
 				</div>
 				<div class="padding-wrap">
 					<div class="element-move-isolation ">
-						<div class="element-move-area board-wrap  jigsaw-wrap piece-container" data-shape="mask-svg" style="gap:2px;--div-x:3; --div-y:3; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
+						<div class="element-move-area board-wrap  jigsaw-wrap piece-container game-jigsaw-wrap" data-shape="mask-svg" style="gap:1px;--div-x:3; --div-y:3;"  data-move-type="transform" data-move-isolation="center">
 							<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
 							<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
 							<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>

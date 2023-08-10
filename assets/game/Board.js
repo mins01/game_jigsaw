@@ -110,8 +110,8 @@ class Board{
 
         this.usedPieces.forEach((piece,idx)=>{
             ElementMove.moveTo(piece.wrap,
-                (Math.random()-0.5) * 2 * rectBoardWrap.width  ,
-                (Math.random()-0.5) * 2 * rectBoardWrap.height
+                Math.round((Math.random()-0.5) * 2 * rectBoardWrap.width)  ,
+                Math.round((Math.random()-0.5) * 2 * rectBoardWrap.height)
                 )
             // ElementMove.isolate('in',piece.wrap)
             piece.isolate();

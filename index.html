@@ -49,7 +49,11 @@
 	<link rel="stylesheet" href="assets/style.css">
 	<style>
 		.game-wrap{
+			--img-aspect-ratio : 1 / 1;
 			--background-image:url(./assets/bg/bg-1.jpg);
+		}
+		.jigsaw-wrap{
+			aspect-ratio: var(--img-aspect-ratio);
 		}
 		.jigsaw-wrap .piece-shape{
 			background-image: var(--background-image,none);
@@ -93,7 +97,7 @@
 			// game.board.divX = 2;
 			// game.board.divY = 1;
 			game.resize();
-			startGame();
+			reayGame();
 		})
 		function initConfForQstr(f){
 			if(!f) f = document.form_conf;
@@ -107,10 +111,17 @@
 
 			syncPieceShape();
 		}
-		function startGame(f){
+		function reayGame(f){
 			if(!f) f = document.form_conf;
-			if(f.imgUrl.value.length >4)
-			game.gameWrap.style.setProperty('--background-image',`url(${f.imgUrl.value})`);
+			if(f.imgUrl.value.length >4){
+				loadImageUrl(f.imgUrl.value,()=>{
+					game.resize();
+					startGame(f)
+				})
+			}
+			
+		}
+		function startGame(f){
 
 			let pieceNumbers = f.pieceNumber.value.split(',');
 			game.setBoard(pieceNumbers[0],pieceNumbers[1]);
@@ -124,11 +135,23 @@
 			url.searchParams.set("pieceNumber", f.pieceNumber.value);
 			url.searchParams.set("imgUrl", f.imgUrl.value);
 			url.searchParams.set("pieceShape", f.pieceShape.value);
-
 			history.pushState(state, "", url);
 		}
 		function syncPieceShape(){
 			document.querySelector('.piece-container').dataset.shape = form_conf.pieceShape.value;
+		}
+		function loadImageUrl(url,cb){
+			console.log('loadImageUrl',url);
+			let img = new Image();
+			img.referrerPolicy = 'no-referrer';
+			img.onload = function(event){
+				console.log('onalod',event,img);
+				game.gameWrap.style.setProperty('--background-image',`url(${img.src})`);
+				document.querySelector('.game-wrap').style.setProperty('--img-aspect-ratio', img.naturalWidth+'/'+img.naturalHeight); // 비율 재정의
+				cb();
+			}
+			img.src = url;
+
 		}
 	</script>
 </head>
@@ -139,7 +162,7 @@
 				<div class="row">
 					<div class="col-md-auto"><h1 class="m-0" style="font-size: 40px;">직소 퍼즐</h1></div>
 					<div class="col">
-						<form name="form_conf" class="form-inline justify-content-center" action="" onsubmit="startGame(this);return false;">
+						<form name="form_conf" class="form-inline justify-content-center" action="" onsubmit="reayGame(this);return false;">
 							<div class="input-group m-1 input-group-sm">
 								<div class="input-group-prepend">
 								<span class="input-group-text">이미지</span>

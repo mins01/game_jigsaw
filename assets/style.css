@@ -71,7 +71,8 @@
 
 
 .piece-shape{
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: transparent;
     pointer-events: none;
 }
 .piece-wrap{

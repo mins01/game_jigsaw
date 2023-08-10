@@ -85,7 +85,6 @@
 		let em = null;
 		window.addEventListener('load',(event)=>{
 			initConfForQstr();
-
 			window.addEventListener('resize',game.resize)
 
 			game.em = new ElementMove(game.board.boardWrap)
@@ -103,6 +102,10 @@
 			if(pieceNumber) f.pieceNumber.value = pieceNumber;
 			const imgUrl = url.searchParams.get('imgUrl');
 			if(imgUrl) f.imgUrl.value = imgUrl;
+			const pieceShape = url.searchParams.get('pieceShape');
+			if(pieceShape) f.pieceShape.value = pieceShape;
+
+			syncPieceShape();
 		}
 		function startGame(f){
 			if(!f) f = document.form_conf;
@@ -120,8 +123,12 @@
 			const url = new URL(location);
 			url.searchParams.set("pieceNumber", f.pieceNumber.value);
 			url.searchParams.set("imgUrl", f.imgUrl.value);
+			url.searchParams.set("pieceShape", f.pieceShape.value);
 
 			history.pushState(state, "", url);
+		}
+		function syncPieceShape(){
+			document.querySelector('.piece-container').dataset.shape = form_conf.pieceShape.value;
 		}
 	</script>
 </head>
@@ -157,6 +164,17 @@
 									<option value="20,10">200 조각</option>
 								</select>
 							</div>
+							<div class="input-group m-1 input-group-sm">
+								<div class="input-group-prepend">
+								<span class="input-group-text">조각모양</span>
+								</div>
+								<select name="pieceShape" class="form-control" onchange="syncPieceShape()">
+									<option value="clip-zigzag">clip-zigzag</option>
+									<option value="clip-rect">clip-rect</option>
+									<option value="mask-css">mask-css</option>
+									<option value="mask-svg" selected>mask-svg</option>
+								</select>
+							</div>
 							<button class="btn btn-sm btn-success" type="submit">준비</button>
 	
 							<button class="btn btn-sm btn-info m-1" type="button" onclick="game.preview()" >이미지확인</button>
@@ -168,7 +186,7 @@
 		</div>
 		<div class="game-layout-body">
 			<div class="game-outbox game-wrap">
-				<div class="preview-layer">
+				<div class="preview-layer" onclick="game.preview()">
 					<div class="padding-wrap">
 						<div class="element-move-isolation ">
 							<div class="preview-wrap jigsaw-wrap"></div>
@@ -177,7 +195,7 @@
 				</div>
 				<div class="padding-wrap">
 					<div class="element-move-isolation ">
-						<div class="element-move-area board-wrap  jigsaw-wrap piece-container mask-svg" style="gap:2px;--div-x:3; --div-y:3; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
+						<div class="element-move-area board-wrap  jigsaw-wrap piece-container" data-shape="mask-svg" style="gap:2px;--div-x:3; --div-y:3; background-color: #ccc;"  data-move-type="transform" data-move-isolation="in">
 							<div class="piece-wrap" data-pos-x="0" data-pos-y="0"><div class="piece-shape" data-shape-top="p" data-shape-right="p" data-shape-bottom="p" data-shape-left="p"></div></div>
 							<div class="piece-wrap" data-pos-x="1" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>
 							<div class="piece-wrap" data-pos-x="2" data-pos-y="0"><div class="piece-shape" data-shape-top="0" data-shape-right="p" data-shape-bottom="n" data-shape-left="n"></div></div>

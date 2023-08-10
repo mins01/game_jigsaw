@@ -172,7 +172,7 @@
     }
 }
 
-@media (max-width:500px) and (orientation: portrait) {
+@media (max-aspect-ratio: 9/16) {
     .game-layout[data-img-orientation="landscape"] :is(.preview-wrap, .jigsaw-wrap){
         width:70%;
         height: auto;
@@ -180,6 +180,16 @@
     .game-layout[data-img-orientation="portrait"] :is(.preview-wrap, .jigsaw-wrap){
         width:70%;
         height: auto;
+    }
+}
+@media (min-aspect-ratio: 16/9) {
+    .game-layout[data-img-orientation="landscape"] :is(.preview-wrap, .jigsaw-wrap){
+        width:auto;
+        height: 70%;
+    }
+    .game-layout[data-img-orientation="portrait"] :is(.preview-wrap, .jigsaw-wrap){
+        width:auto;
+        height: 70%;
     }
 }
 

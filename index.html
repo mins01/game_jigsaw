@@ -115,7 +115,6 @@
 			if(!f) f = document.form_conf;
 			if(f.imgUrl.value.length >4){
 				loadImageUrl(f.imgUrl.value,()=>{
-					game.resize();
 					startGame(f)
 				})
 			}
@@ -148,6 +147,7 @@
 				console.log('onalod',event,img);
 				game.gameWrap.style.setProperty('--background-image',`url(${img.src})`);
 				document.querySelector('.game-wrap').style.setProperty('--img-aspect-ratio', img.naturalWidth+'/'+img.naturalHeight); // 비율 재정의
+				game.resize();
 				cb();
 			}
 			img.src = url;
